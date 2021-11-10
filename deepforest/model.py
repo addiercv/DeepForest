@@ -4,9 +4,14 @@ from torchvision.models.detection.retinanet import RetinaNet
 from torchvision.models.detection.retinanet import AnchorGenerator
 
 
-def load_backbone():
-    """A torch vision retinanet model"""
-    backbone = torchvision.models.detection.retinanet_resnet50_fpn(pretrained=True)
+def load_backbone(trainable_backbone_layers):
+    """A torch vision retinanet model
+    Args:
+        trainable_backbone_layers (int): number of trainable (not frozen) resnet layers starting from final block.
+            Valid values are between 0 and 5, with 5 meaning all backbone layers are trainable.
+    """
+    
+    backbone = torchvision.models.detection.retinanet_resnet50_fpn(pretrained=True, trainable_backbone_layers=trainable_backbone_layers)
 
     # load the model onto the computation device
     return backbone
@@ -34,12 +39,13 @@ def create_anchor_generator(sizes=((8, 16, 32, 64, 128, 256, 400),),
     return anchor_generator
 
 
-def create_model(num_classes, nms_thresh, score_thresh, backbone = None):
+def create_model(num_classes, nms_thresh, score_thresh, backbone = None, trainable_backbone_layers=None):
     """Create a retinanet model
     Args:
         num_classes (int): number of classes in the model
         nms_thresh (float): non-max suppression threshold for intersection-over-union [0,1]
         score_thresh (float): minimum prediction score to keep during prediction  [0,1]
+        trainable_backbone_layers (int): number of trainable (not frozen) resnet layers starting from final block. Valid values are between 0 and 5, with 5 meaning all backbone layers are trainable.
     Returns:
         model: a pytorch nn module
     """

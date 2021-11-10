@@ -109,7 +109,7 @@ class deepforest(pl.LightningModule):
     def create_model(self):
         """Define a deepforest retinanet architecture"""
         self.model = model.create_model(self.num_classes, self.config["nms_thresh"],
-                                        self.config["score_thresh"])
+                                        self.config["score_thresh"], trainable_backbone_layers=self.config["trainable_backbone_layers"])
 
     def create_trainer(self, logger=None, callbacks=[], **kwargs):
         """Create a pytorch lightning training by reading config files
