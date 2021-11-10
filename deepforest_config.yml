@@ -24,6 +24,12 @@ train:
     #Useful debugging flag in pytorch lightning, set to True to get a single batch of training to test settings.
     fast_dev_run: False
     
+    #Trainable backbone layers from https://pytorch.org/vision/0.9/_modules/torchvision/models/detection/retinanet.html
+    #trainable_backbone_layers (int): number of trainable (not frozen) resnet layers starting from final block.
+    #Valid values are between 0 and 5, with 5 meaning all backbone layers are trainable.
+    
+    trainable_backbone_layers:
+    
 validation:
     #callback args
     csv_file: 
